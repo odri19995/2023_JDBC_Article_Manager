@@ -85,13 +85,27 @@ public class App {
 					
 					SecSql sql = new SecSql();
 					
+					sql.append("SELECT COUNT(*)");
+					sql.append("FROM article" );
+					sql.append("WHERE id = ?", id);
+					
+					int articlesCount = DBUtil.selectRowIntValue(conn, sql);
+					if(articlesCount ==0) {
+						System.out.printf("%d번 글은 존재하지 않습니다\n", id);
+						continue;
+					}
+					
+					
+					
+					sql = new SecSql();
+					
 					sql.append("UPDATE article");
 					sql.append("SET updateDate = NOW()");
 					sql.append(", title = ?",title);
 					sql.append(", `body` = ?", body);
 					sql.append("WHERE id = ?", id);
 					
-					DBUtil.update(conn, sql);
+					DBUtil.update(conn, sql);  //영향 받은 줄을 리턴해주는 것 적용된 열이 있다면 1 아니면 0을 반환
 
 					System.out.printf("%d번 글이 수정되었습니다\n", id);
 				}
