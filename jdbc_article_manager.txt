@@ -10,11 +10,37 @@ CREATE TABLE article(
 	`body` TEXT NOT NULL
 );
 
+# member 테이블 생성
+CREATE TABLE `member`(
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	loginId VARCHAR(50) NOT NULL,
+	loginPw VARCHAR(20) NOT NULL,
+	`name` VARCHAR(20) NOT NULL
+);
+
+
+#article 테스트 데이터
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = CONCAT('제목', RAND()),
 `body` = CONCAT('내용', RAND());
 
+
+#member 테스트 데이터 
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test',
+loginPw = 'test',
+`name` = 'test';
+
+#article, member 테이블 구조 확인
 DESC article;
+DESC `member`;
+
+#article, member 테이블 조회
 SELECT * FROM article;
+SELECT * FROM `member`;
