@@ -6,7 +6,7 @@ import java.util.Scanner;
 import com.KoreaIT.example.JAM.service.MemberService;
 
 public class MemberController {
-
+//입 출력 밖에 안함, 간단한 판단
 	private Scanner sc;
 	private MemberService memberService;
 	
