@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.KoreaIT.example.JAM.Article;
+import com.KoreaIT.example.JAM.dto.Article;
 import com.KoreaIT.example.JAM.dao.ArticleDao;
 
 public class ArticleService {
