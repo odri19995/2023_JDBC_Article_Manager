@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import com.KoreaIT.example.JAM.dto.Article;
 import com.KoreaIT.example.JAM.service.ArticleService;
+import com.KoreaIT.example.JAM.session.Session;
 
 public class ArticleController {
 	
@@ -18,14 +19,22 @@ public class ArticleController {
 	}
 
 	public void doWrite() {
+		
+		if (Session.isLogined() == false) {
+			System.out.println("로그인 후 이용해주세요");
+			return;
+		}
+		
 		System.out.println("== 게시물 작성 ==");
 
 		System.out.printf("제목 : ");
 		String title = sc.nextLine();
 		System.out.printf("내용 : ");
 		String body = sc.nextLine();
+		
+		int loginid =Session.loginedMemberId;
 
-		int id = articleService.doWrite(title, body);
+		int id = articleService.doWrite(title, body,loginid);
 
 		System.out.printf("%d번 글이 생성되었습니다\n", id);
 	}
@@ -67,6 +76,12 @@ public class ArticleController {
 	}
 
 	public void doModify(String cmd) {
+		
+		if (Session.isLogined() == false) {
+			System.out.println("로그인 후 이용해주세요");
+			return;
+		}
+		
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 
 		int articleCount = articleService.getArticleCount(id);
