@@ -84,4 +84,15 @@ public class ArticleDao {
 		DBUtil.delete(conn, sql);
 	}
 
+	public void doincreaseViewCount(int id) {
+		SecSql sql = new SecSql();
+
+		sql.append("UPDATE article");
+		sql.append("SET viewCount = viewCount + 1");
+		sql.append("WHERE id = ?", id);
+		
+		DBUtil.update(conn, sql);
+		
+	}
+
 }

@@ -135,7 +135,7 @@ public class MemberController {
 				continue;
 			}
 
-			Session.login(member);
+			Session.login(member);  //session에 로그인 정보 넘겨주기
 
 			System.out.printf("%s 님 환영합니다. \n", member.name);
 

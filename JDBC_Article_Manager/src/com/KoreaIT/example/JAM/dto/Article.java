@@ -5,6 +5,8 @@ import java.util.Map;
 
 public class Article {
 	public int id;
+	public int memberId;
+	public int viewCount;
 	public LocalDateTime regDate;
 	public LocalDateTime updateDate;
 	public String title;
@@ -13,6 +15,8 @@ public class Article {
 
 	public Article(Map<String, Object> articleMap) {
 		this.id = (int) articleMap.get("id");
+		this.memberId = (int) articleMap.get("memberId");
+		this.viewCount = (int) articleMap.get("viewCount");
 		this.regDate = (LocalDateTime) articleMap.get("regDate");
 		this.updateDate = (LocalDateTime) articleMap.get("updateDate");
 		this.title = (String) articleMap.get("title");
@@ -22,9 +26,8 @@ public class Article {
 
 	@Override
 	public String toString() {
-		return "Article [id=" + id + ", regDate=" + regDate + ", updateDate=" + updateDate + ", title=" + title
-				+ ", body=" + body + ", name=" + name + "]";
-		
+		return "Article [id=" + id + ", memberId=" + memberId + ", viewCount=" + viewCount + ", regDate=" + regDate
+				+ ", updateDate=" + updateDate + ", title=" + title + ", body=" + body + ", name=" + name + "]";
 	}
 	
 }

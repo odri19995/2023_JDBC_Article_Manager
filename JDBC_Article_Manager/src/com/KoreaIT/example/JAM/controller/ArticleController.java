@@ -40,7 +40,7 @@ public class ArticleController {
 		System.out.printf("%d번 글이 생성되었습니다\n", id);
 	}
 	
-	public void showList() {
+	public void showList(String cmd) {
 		System.out.println("== 게시물 목록 ==");
 
 		List<Article> articles = articleService.getArticles();
@@ -50,16 +50,17 @@ public class ArticleController {
 			return;
 		}
 
-		System.out.println("번호	|	제목   |	작성자명    | 작성날짜");
+		System.out.println("번호	|	제목   |	작성자명    | 작성날짜   | 조회수 ");
 
 		for (Article article : articles) {
-			System.out.printf("%d	|	%s	|	%s   |	%s\n", article.id, article.title,article.name,Util.datetimeFormat(article.updateDate));
+			System.out.printf("%d	|	%s	|	%s   |	%s	|	%d\n", article.id, article.title,article.name,Util.datetimeFormat(article.updateDate), article.viewCount);
 		}
 	}
-
+	
 	public void showDetail(String cmd) {
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 
+		articleService.increaseViewCount(id);
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
@@ -75,6 +76,8 @@ public class ArticleController {
 		System.out.printf("작성자명 : %s\n", article.name);
 		System.out.printf("제목 : %s\n", article.title);
 		System.out.printf("내용 : %s\n", article.body);
+		System.out.printf("조회수 : %d\n", article.viewCount);
+		
 	}
 
 	public void doModify(String cmd) {
@@ -84,16 +87,20 @@ public class ArticleController {
 			return;
 		}
 		
-
-		
 		int id = Integer.parseInt(cmd.split(" ")[2]);
+		
+		Article article = articleService.getArticle(id);
 
-		int articleCount = articleService.getArticleCount(id);
-
-		if (articleCount == 0) {
-			System.out.printf("%d번 글은 존재하지 않습니다\n", id);
+		if (article == null) {
+			System.out.printf("%d번 게시글은 존재하지 않습니다\n", id); //게시글 번호로 가져온 map 객체
 			return;
 		}
+		
+		if (article.memberId != Session.loginedMemberId) {
+			System.out.println("수정 권한이 없습니다.");
+			return;
+		}
+
 
 		System.out.println("== 게시물 수정 ==");
 
@@ -108,14 +115,25 @@ public class ArticleController {
 	}
 
 	public void doDelete(String cmd) {
-		int id = Integer.parseInt(cmd.split(" ")[2]);
-
-		int articleCount = articleService.getArticleCount(id);
-
-		if (articleCount == 0) {
-			System.out.printf("%d번 글은 존재하지 않습니다\n", id);
+		if (Session.isLogined() == false) {
+			System.out.println("로그인 후 이용해주세요");
 			return;
 		}
+		
+		int id = Integer.parseInt(cmd.split(" ")[2]);
+		
+		Article article = articleService.getArticle(id);
+
+		if (article == null) {
+			System.out.printf("%d번 게시글은 존재하지 않습니다\n", id); //게시글 번호로 가져온 map 객체
+			return;
+		}
+		
+		if (article.memberId != Session.loginedMemberId) {
+			System.out.println("삭제 권한이 없습니다.");
+			return;
+		}
+
 
 		System.out.println("== 게시물 삭제 ==");
 
