@@ -20,9 +20,9 @@ public class ArticleService {
 		return articleDao.doWrite(title, body, loginid);
 	}
 	
-	public List<Article> getArticles(){
+	public List<Article> getArticles(String searchKeyword){
 		
-		List<Map<String, Object>> articleListMap = articleDao.getArticles();
+		List<Map<String, Object>> articleListMap = articleDao.getArticles(searchKeyword);
 		
 		List<Article> articles = new ArrayList<>();
 		
@@ -57,8 +57,8 @@ public class ArticleService {
 		articleDao.doDelete(id);
 	}
 
-	public void increaseViewCount(int id) {
-		articleDao.doincreaseViewCount(id);
+	public int increaseViewCount(int id) {
+		return articleDao.doincreaseViewCount(id);
 		
 	}
 }

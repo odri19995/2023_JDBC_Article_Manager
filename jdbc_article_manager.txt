@@ -12,6 +12,9 @@ CREATE TABLE article(
 # memberId 정보 추가
 ALTER TABLE article ADD COLUMN memberId INT UNSIGNED NOT NULL AFTER updateDate;
 
+# article에 조회수  정보 추가
+ALTER TABLE article ADD COLUMN viewCount INT UNSIGNED NOT NULL AFTER updateDate;
+
 # member 테이블 생성
 CREATE TABLE `member`(
 	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -50,6 +53,13 @@ DESC `member`;
 SELECT * FROM article;
 SELECT * FROM `member`;
 
-SELECT * FROM article a
-INNER JOIN `member` m
+SELECT a.*, m.name
+FROM article AS a
+INNER JOIN `member` AS m
 ON a.memberId = m.id
+WHERE a.id = 1
+ORDER BY a.id DESC;
+
+UPDATE article
+SET viewCount = viewCount +1 
+WHERE id = 1;
