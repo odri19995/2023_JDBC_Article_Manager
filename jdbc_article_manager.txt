@@ -49,3 +49,7 @@ DESC `member`;
 #article, member 테이블 조회
 SELECT * FROM article;
 SELECT * FROM `member`;
+
+SELECT * FROM article a
+INNER JOIN `member` m
+ON a.memberId = m.id

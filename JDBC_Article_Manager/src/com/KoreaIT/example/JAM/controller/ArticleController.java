@@ -7,6 +7,7 @@ import java.util.Scanner;
 import com.KoreaIT.example.JAM.dto.Article;
 import com.KoreaIT.example.JAM.service.ArticleService;
 import com.KoreaIT.example.JAM.session.Session;
+import com.KoreaIT.example.JAM.util.Util;
 
 public class ArticleController {
 	
@@ -49,10 +50,10 @@ public class ArticleController {
 			return;
 		}
 
-		System.out.println("번호	|	제목");
+		System.out.println("번호	|	제목   |	작성자명    | 작성날짜");
 
 		for (Article article : articles) {
-			System.out.printf("%d	|	%s\n", article.id, article.title);
+			System.out.printf("%d	|	%s	|	%s   |	%s\n", article.id, article.title,article.name,Util.datetimeFormat(article.updateDate));
 		}
 	}
 
@@ -69,8 +70,9 @@ public class ArticleController {
 		System.out.printf("== %d번 게시물 상세보기 ==\n", id);
 
 		System.out.printf("번호 : %d\n", article.id);
-		System.out.printf("작성날짜 : %s\n", article.regDate);
-		System.out.printf("수정날짜 : %s\n", article.updateDate);
+		System.out.printf("작성날짜 : %s\n", Util.datetimeFormat(article.regDate));
+		System.out.printf("수정날짜 : %s\n", Util.datetimeFormat(article.updateDate));
+		System.out.printf("작성자명 : %s\n", article.name);
 		System.out.printf("제목 : %s\n", article.title);
 		System.out.printf("내용 : %s\n", article.body);
 	}
@@ -81,6 +83,8 @@ public class ArticleController {
 			System.out.println("로그인 후 이용해주세요");
 			return;
 		}
+		
+
 		
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 
